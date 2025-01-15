@@ -331,81 +331,82 @@ static int EveStreamLogger(ThreadVars *tv, void *thread_data, const Packet *p)
         jb_set_uint(js, "tcpres", TCP_GET_RAW_X2(p->tcph));
         jb_set_uint(js, "tcpurgp", TCP_GET_URG_POINTER(p));
 
-        jb_open_array(js, "flags");
-        if (p->tcpvars.stream_pkt_flags & STREAM_PKT_FLAG_RETRANSMISSION)
-            jb_append_string(js, "retransmission");
-        if (p->tcpvars.stream_pkt_flags & STREAM_PKT_FLAG_SPURIOUS_RETRANSMISSION)
-            jb_append_string(js, "spurious_retransmission");
-        if (p->tcpvars.stream_pkt_flags & STREAM_PKT_FLAG_KEEPALIVE)
-            jb_append_string(js, "keepalive");
-        if (p->tcpvars.stream_pkt_flags & STREAM_PKT_FLAG_KEEPALIVEACK)
-            jb_append_string(js, "keepalive_ack");
-        if (p->tcpvars.stream_pkt_flags & STREAM_PKT_FLAG_WINDOWUPDATE)
-            jb_append_string(js, "window_update");
+        // jb_open_array(js, "flags");
+        // if (p->tcpvars.stream_pkt_flags & STREAM_PKT_FLAG_RETRANSMISSION)
+        //     jb_append_string(js, "retransmission");
+        // if (p->tcpvars.stream_pkt_flags & STREAM_PKT_FLAG_SPURIOUS_RETRANSMISSION)
+        //     jb_append_string(js, "spurious_retransmission");
+        // if (p->tcpvars.stream_pkt_flags & STREAM_PKT_FLAG_KEEPALIVE)
+        //     jb_append_string(js, "keepalive");
+        // if (p->tcpvars.stream_pkt_flags & STREAM_PKT_FLAG_KEEPALIVEACK)
+        //     jb_append_string(js, "keepalive_ack");
+        // if (p->tcpvars.stream_pkt_flags & STREAM_PKT_FLAG_WINDOWUPDATE)
+        //     jb_append_string(js, "window_update");
 
-        if (p->tcpvars.stream_pkt_flags & STREAM_PKT_FLAG_EVENTSET)
-            jb_append_string(js, "event_set");
-        if (p->tcpvars.stream_pkt_flags & STREAM_PKT_FLAG_STATE_UPDATE)
-            jb_append_string(js, "state_update");
-        if (p->tcpvars.stream_pkt_flags & STREAM_PKT_FLAG_DUP_ACK)
-            jb_append_string(js, "dup_ack");
-        if (p->tcpvars.stream_pkt_flags & STREAM_PKT_FLAG_DSACK)
-            jb_append_string(js, "dsack");
-        if (p->tcpvars.stream_pkt_flags & STREAM_PKT_FLAG_ACK_UNSEEN_DATA)
-            jb_append_string(js, "ack_unseen_data");
-        if (p->tcpvars.stream_pkt_flags & STREAM_PKT_FLAG_TCP_PORT_REUSE)
-            jb_append_string(js, "tcp_port_reuse");
-        if (p->tcpvars.stream_pkt_flags & STREAM_PKT_FLAG_TCP_ZERO_WIN_PROBE)
-            jb_append_string(js, "zero_window_probe");
-        if (p->tcpvars.stream_pkt_flags & STREAM_PKT_FLAG_TCP_ZERO_WIN_PROBE_ACK)
-            jb_append_string(js, "zero_window_probe_ack");
-        jb_close(js);
+        // if (p->tcpvars.stream_pkt_flags & STREAM_PKT_FLAG_EVENTSET)
+        //     jb_append_string(js, "event_set");
+        // if (p->tcpvars.stream_pkt_flags & STREAM_PKT_FLAG_STATE_UPDATE)
+        //     jb_append_string(js, "state_update");
+        // if (p->tcpvars.stream_pkt_flags & STREAM_PKT_FLAG_DUP_ACK)
+        //     jb_append_string(js, "dup_ack");
+        // if (p->tcpvars.stream_pkt_flags & STREAM_PKT_FLAG_DSACK)
+        //     jb_append_string(js, "dsack");
+        // if (p->tcpvars.stream_pkt_flags & STREAM_PKT_FLAG_ACK_UNSEEN_DATA)
+        //     jb_append_string(js, "ack_unseen_data");
+        // if (p->tcpvars.stream_pkt_flags & STREAM_PKT_FLAG_TCP_PORT_REUSE)
+        //     jb_append_string(js, "tcp_port_reuse");
+        // if (p->tcpvars.stream_pkt_flags & STREAM_PKT_FLAG_TCP_ZERO_WIN_PROBE)
+        //     jb_append_string(js, "zero_window_probe");
+        // if (p->tcpvars.stream_pkt_flags & STREAM_PKT_FLAG_TCP_ZERO_WIN_PROBE_ACK)
+        //     jb_append_string(js, "zero_window_probe_ack");
+        // jb_close(js);
     }
+    /* Close packet */
     jb_close(js);
 
-    jb_open_object(js, "session");
-    if (p->flow != NULL && p->flow->protoctx != NULL) {
-        const TcpSession *ssn = p->flow->protoctx;
-        const char *tcp_state = StreamTcpStateAsString(ssn->state);
-        if (tcp_state != NULL)
-            jb_set_string(js, "state", tcp_state);
-        if (p->tcpvars.stream_pkt_flags & STREAM_PKT_FLAG_STATE_UPDATE) {
-            const char *tcp_pstate = StreamTcpStateAsString(ssn->pstate);
-            if (tcp_pstate != NULL)
-                jb_set_string(js, "pstate", tcp_pstate);
-        }
-        EveAddFlowTcpFlags(ssn, "flags", js);
+    // jb_open_object(js, "session");
+    // if (p->flow != NULL && p->flow->protoctx != NULL) {
+    //     const TcpSession *ssn = p->flow->protoctx;
+    //     const char *tcp_state = StreamTcpStateAsString(ssn->state);
+    //     if (tcp_state != NULL)
+    //         jb_set_string(js, "state", tcp_state);
+    //     if (p->tcpvars.stream_pkt_flags & STREAM_PKT_FLAG_STATE_UPDATE) {
+    //         const char *tcp_pstate = StreamTcpStateAsString(ssn->pstate);
+    //         if (tcp_pstate != NULL)
+    //             jb_set_string(js, "pstate", tcp_pstate);
+    //     }
+    //     EveAddFlowTcpFlags(ssn, "flags", js);
 
-        jb_open_object(js, "client");
-        LogStream(&ssn->client, js);
-        jb_close(js);
-        jb_open_object(js, "server");
-        LogStream(&ssn->server, js);
-        jb_close(js);
-    }
-    jb_close(js);
+    //     jb_open_object(js, "client");
+    //     LogStream(&ssn->client, js);
+    //     jb_close(js);
+    //     jb_open_object(js, "server");
+    //     LogStream(&ssn->server, js);
+    //     jb_close(js);
+    // }
+    // jb_close(js);
 
-    if (p->tcpvars.stream_pkt_flags & STREAM_PKT_FLAG_EVENTSET) {
-        jb_open_array(js, "events");
-        for (int i = 0; i < p->events.cnt; i++) {
-            uint8_t event_code = p->events.events[i];
-            bool is_decode = EVENT_IS_DECODER_PACKET_ERROR(event_code);
-            if (is_decode)
-                continue;
-            if (event_code >= DECODE_EVENT_MAX)
-                continue;
-            const char *event = DEvents[event_code].event_name;
-            if (event == NULL)
-                continue;
-            jb_append_string(js, event);
-        }
-        jb_close(js);
-    }
+    // if (p->tcpvars.stream_pkt_flags & STREAM_PKT_FLAG_EVENTSET) {
+    //     jb_open_array(js, "events");
+    //     for (int i = 0; i < p->events.cnt; i++) {
+    //         uint8_t event_code = p->events.events[i];
+    //         bool is_decode = EVENT_IS_DECODER_PACKET_ERROR(event_code);
+    //         if (is_decode)
+    //             continue;
+    //         if (event_code >= DECODE_EVENT_MAX)
+    //             continue;
+    //         const char *event = DEvents[event_code].event_name;
+    //         if (event == NULL)
+    //             continue;
+    //         jb_append_string(js, event);
+    //     }
+    //     jb_close(js);
+    // }
 
-    if (p->drop_reason != 0) {
-        const char *str = PacketDropReasonToString(p->drop_reason);
-        jb_set_string(js, "reason", str);
-    }
+    // if (p->drop_reason != 0) {
+    //     const char *str = PacketDropReasonToString(p->drop_reason);
+    //     jb_set_string(js, "reason", str);
+    // }
 
     /* Close stream. */
     jb_close(js);
