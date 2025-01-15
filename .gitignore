@@ -1,0 +1,36 @@
+# Ignore object and archive files
+*.o
+*.a
+*.lo
+*.la
+
+# Ignore Makefiles (if not needed)
+Makefile
+
+# Ignore backup and temporary files
+*~
+*.swp
+*.bak
+
+.deps
+.libs
+
+config.log
+config.status
+etc/suricata.logrotate
+etc/suricata.service
+libhtp/config.log
+libhtp/config.status
+libhtp/htp.pc
+libhtp/htp_config_auto_gen.h
+libhtp/libtool
+libhtp/stamp-h1
+libsuricata-config
+libtool
+rust/.cargo/config.toml
+rust/Cargo.lock
+rust/Cargo.toml
+rust/target/
+src/stamp-h1
+src/suricata
+suricata.yaml
