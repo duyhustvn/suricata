@@ -840,39 +840,39 @@ JsonBuilder *CreateEveHeader(const Packet *p, enum OutputJsonLogDirection dir,
 
     jb_set_string(js, "timestamp", timebuf);
 
-    CreateEveFlowId(js, f);
+    // CreateEveFlowId(js, f);
 
     /* sensor id */
-    if (sensor_id >= 0) {
-        jb_set_uint(js, "sensor_id", sensor_id);
-    }
+    // if (sensor_id >= 0) {
+    //     jb_set_uint(js, "sensor_id", sensor_id);
+    // }
 
     /* input interface */
-    if (p->livedev) {
-        jb_set_string(js, "in_iface", p->livedev->dev);
-    }
+    // if (p->livedev) {
+    //     jb_set_string(js, "in_iface", p->livedev->dev);
+    // }
 
     /* pcap_cnt */
-    if (p->pcap_cnt != 0) {
-        jb_set_uint(js, "pcap_cnt", p->pcap_cnt);
-    }
+    // if (p->pcap_cnt != 0) {
+    //     jb_set_uint(js, "pcap_cnt", p->pcap_cnt);
+    // }
 
     if (event_type) {
         jb_set_string(js, "event_type", event_type);
     }
 
     /* vlan */
-    if (p->vlan_idx > 0) {
-        jb_open_array(js, "vlan");
-        jb_append_uint(js, p->vlan_id[0]);
-        if (p->vlan_idx > 1) {
-            jb_append_uint(js, p->vlan_id[1]);
-        }
-        if (p->vlan_idx > 2) {
-            jb_append_uint(js, p->vlan_id[2]);
-        }
-        jb_close(js);
-    }
+    // if (p->vlan_idx > 0) {
+    //     jb_open_array(js, "vlan");
+    //     jb_append_uint(js, p->vlan_id[0]);
+    //     if (p->vlan_idx > 1) {
+    //         jb_append_uint(js, p->vlan_id[1]);
+    //     }
+    //     if (p->vlan_idx > 2) {
+    //         jb_append_uint(js, p->vlan_id[2]);
+    //     }
+    //     jb_close(js);
+    // }
 
     /* 5-tuple */
     JsonAddrInfo addr_info = json_addr_info_zero;
@@ -902,7 +902,7 @@ JsonBuilder *CreateEveHeader(const Packet *p, enum OutputJsonLogDirection dir,
             break;
     }
 
-    jb_set_string(js, "pkt_src", PktSrcToString(p->pkt_src));
+    // jb_set_string(js, "pkt_src", PktSrcToString(p->pkt_src));
 
     if (eve_ctx != NULL) {
         EveAddCommonOptions(&eve_ctx->cfg, p, f, js, dir);
