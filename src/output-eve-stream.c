@@ -296,22 +296,22 @@ static int EveStreamLogger(ThreadVars *tv, void *thread_data, const Packet *p)
     if (unlikely(js == NULL))
         return TM_ECODE_OK;
 
-    if (p->flow != NULL) {
-        if (p->flowflags & FLOW_PKT_TOSERVER) {
-            jb_set_string(js, "direction", "to_server");
-        } else {
-            jb_set_string(js, "direction", "to_client");
-        }
-    }
+    // if (p->flow != NULL) {
+    //     if (p->flowflags & FLOW_PKT_TOSERVER) {
+    //         jb_set_string(js, "direction", "to_server");
+    //     } else {
+    //         jb_set_string(js, "direction", "to_client");
+    //     }
+    // }
 
     jb_open_object(js, "stream_tcp");
     jb_open_object(js, "packet");
 
     if (PKT_IS_IPV4(p)) {
         jb_set_uint(js, "len", IPV4_GET_IPLEN(p));
-        jb_set_uint(js, "tos", IPV4_GET_IPTOS(p));
-        jb_set_uint(js, "ttl", IPV4_GET_IPTTL(p));
-        jb_set_uint(js, "ipid", IPV4_GET_IPID(p));
+        // jb_set_uint(js, "tos", IPV4_GET_IPTOS(p));
+        // jb_set_uint(js, "ttl", IPV4_GET_IPTTL(p));
+        // jb_set_uint(js, "ipid", IPV4_GET_IPID(p));
     } else if (PKT_IS_IPV6(p)) {
         jb_set_uint(js, "len", IPV6_GET_PLEN(p));
         jb_set_uint(js, "tc", IPV6_GET_CLASS(p));
@@ -328,8 +328,8 @@ static int EveStreamLogger(ThreadVars *tv, void *thread_data, const Packet *p)
         jb_set_bool(js, "rst", TCP_ISSET_FLAG_RST(p) ? true : false);
         jb_set_bool(js, "urg", TCP_ISSET_FLAG_URG(p) ? true : false);
         jb_set_bool(js, "fin", TCP_ISSET_FLAG_FIN(p) ? true : false);
-        jb_set_uint(js, "tcpres", TCP_GET_RAW_X2(p->tcph));
-        jb_set_uint(js, "tcpurgp", TCP_GET_URG_POINTER(p));
+        // jb_set_uint(js, "tcpres", TCP_GET_RAW_X2(p->tcph));
+        // jb_set_uint(js, "tcpurgp", TCP_GET_URG_POINTER(p));
 
         // jb_open_array(js, "flags");
         // if (p->tcpvars.stream_pkt_flags & STREAM_PKT_FLAG_RETRANSMISSION)
